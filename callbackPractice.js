@@ -1,14 +1,14 @@
 /* In this repo your job is to write functions to make each function call work properly.
-Below is a sample problem 
+Below is a sample problem
 
   //code here for sayHi
 
    sayHi('Hi Katie', function(thingToSay){
       alert(thingToSay);
    });
-   
-and what you should write is the sayHi function that makes the code above work, 
-    
+
+and what you should write is the sayHi function that makes the code above work,
+
    var sayHi = function(str, cb){
     cb(str);
    }
@@ -16,15 +16,17 @@ and what you should write is the sayHi function that makes the code above work,
    sayHi('Hi Katie', function(thingToSay){
       alert(thingToSay); //should alert ('Hi Katie')'
    });
-    
+
 */
 
 
 // 1. Write a function called first that returns the first item of the array using a callback function
 
-  // Code Here
+function first(names, cb) {
+  return cb(names[0]);
+}
 
-  
+
 var names = ['Tyler', 'Cahlan', 'Ryan', 'Colt', 'Tyler', 'Blaine', 'Cahlan'];
 first(names, function(firstName){
   console.log('The first name in names is ' + firstName);
@@ -35,7 +37,9 @@ first(names, function(firstName){
 
 // 2. Write a function called last which returns the last item of the array using a callback function.
 
-  //Code Here
+  function last(names,cb){
+    return cb(names[names.length-1])
+  }
 
 
 
@@ -46,10 +50,12 @@ last(names, function(lastName){
 
 
 
-// 3. Write a function called multiply that multiplies two numbers. Invoke the callback with the result of the multiplication. 
+// 3. Write a function called multiply that multiplies two numbers. Invoke the callback
+// with the result of the multiplication.
 
-  //Code Here
-
+function multiply(num1,num2,cb){
+  return cb(num1 * num2);
+}
 
 
 multiply(4, 3, function(answer){
@@ -58,13 +64,18 @@ multiply(4, 3, function(answer){
 
 
 
-// 4. Write a function called contains that checks if a name exists in an array. 
-// If it does, invoke the callback with true as an argument. 
+// 4. Write a function called contains that checks if a name exists in an array.
+// If it does, invoke the callback with true as an argument.
 // If the name does not exist, invoke the callback with false as an argument.
 
-  //Code Here 
-
-
+  function contains(arr,name,cb){
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i]===name){
+          return cb(true);
+        }
+          return cb(false);
+        }
+  }
 
 
 contains(names, 'Colt', function(result){
@@ -80,7 +91,13 @@ contains(names, 'Colt', function(result){
 // 5. Write a function called uniq that takes the names array and removes all duplicates.
 // Invoke the callback with the modified array as an argument.
 
-  //Code Here
+  function uniq(names,cb) {
+    var newArr = names.filter(function(cur,i,arr) {
+      if (arr.indexOf(cur) === i) return true;
+    })
+
+    return cb(newArr);
+  }
 
 
 
@@ -89,10 +106,14 @@ uniq(names, function(uniqArr){
 });
 
 
-// 6. Write a function called each that takes in an array of names. For each name in the array, invoke the callback and pass in the name and the name's index as arguments.
+// 6. Write a function called each that takes in an array of names. For each name in the array, invoke
+// the callback and pass in the name and the names index as arguments.
 
-    //Code Here 
-
+    function each(arr, cb) {
+      for (var i = 0; i< arr.length;i++){
+        cb(arr[i], i)
+      }
+    }
 
 
 each(names, function(item, indice){
@@ -101,13 +122,17 @@ each(names, function(item, indice){
 
 
 
-// 7. Write a function called getUserById that looks at the array of user objects (users) and searches for a user by ID.
+// 7. Write a function called getUserById that looks at the array of user
+// objects (users) and searches for a user by ID.
 // When the correct user object is found, invoke the callback with the user object as an argument.
 
-// Code here
-
-
-
+function getUserById(obj, id, cb) {
+  for (var i=0; i <obj.length; i++){
+      if (obj[i].id === id) {
+        cb(obj[i]);
+      }
+  }
+}
 var users = [
   {
     id: '12d',
@@ -130,5 +155,5 @@ var users = [
 ];
 
 getUserById(users, '16t', function(user){
-  console.log('The user with the id 16t has the email of ' + user.email + ' the name of ' + user.name + ' and the address of ' + user.address); 
+  console.log('The user with the id 16t has the email of ' + user.email + ' the name of ' + user.name + ' and the address of ' + user.address);
 });
